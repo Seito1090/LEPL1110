@@ -106,17 +106,17 @@ void geoMeshGenerate() {
 //
 //    gmshOptionSetNumber("Mesh.SaveAll", 1, &ierr);
 //    gmshOptionSetNumber("Mesh.RecombineAll", 1, &ierr);
-//    gmshOptionSetNumber("Mesh.Algorithm", 8, &ierr);  chk(ierr);
-//    gmshOptionSetNumber("Mesh.RecombinationAlgorithm", 1.0, &ierr);  chk(ierr);
-//    gmshModelGeoMeshSetRecombine(2,1,45,&ierr);  chk(ierr);
+//    gmshOptionSetNumber("Mesh.Algorithm", 8, &ierr);  //chk(ierr);
+//    gmshOptionSetNumber("Mesh.RecombinationAlgorithm", 1.0, &ierr);  //chk(ierr);
+//    gmshModelGeoMeshSetRecombine(2,1,45,&ierr);  //chk(ierr);
 //    gmshModelMeshGenerate(2, &ierr);  
    
  
 //
 //  Plot of Fltk
 //
-//   gmshFltkInitialize(&ierr);
-//   gmshFltkRun(&ierr);  chk(ierr);
+//    gmshFltkInitialize(&ierr);
+//    gmshFltkRun(&ierr);  //chk(ierr);
 //
     
 }
