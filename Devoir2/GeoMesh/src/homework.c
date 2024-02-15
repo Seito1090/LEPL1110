@@ -27,9 +27,17 @@ double geoSize(double x, double y){
 //     
 // Your contribution starts here ....
 //
-    
-    h = 5;
-    return h;
+    double dist_to_notch = sqrt(pow(x - x0, 2) + pow(y - y0, 2));
+    double dist_to_hole = sqrt(pow(x - x1, 2) + pow(y - y1, 2));
+
+    // Check if the point is inside the notch or hole
+    if (dist_to_notch < r0) {
+        return h0; // Size inside the notch
+    } else if (dist_to_hole < r1) {
+        return h1; // Size inside the hole
+    } else {
+        return h; // Default size outside the notch and hole
+    }
     
 //   
 // Your contribution ends here :-)
@@ -66,14 +74,14 @@ void geoMeshGenerate() {
     int ierr;
     int idPlate = gmshModelOccAddRectangle(x0, y0, 0, w, h, -1, 0,&ierr);   
     ErrorGmsh(ierr);
-    int idNotch = gmshModelOccAddDisk(x0, y0, 0, r0, r0, -1,NULL,0,NULL,0,&ierr); 
+    int idNotch = gmshModelOccAddDisk(x0, y0, 0, r0, r0, -1, NULL,0,NULL,0,&ierr); 
     ErrorGmsh(ierr);
-    int idHole  = gmshModelOccAddDisk(x1, y1, 0, r1, r1, -1,NULL,0,NULL,0,&ierr);    
+    int idHole  = gmshModelOccAddDisk(x1, y1, 0, r1, r1, -1, NULL,0,NULL,0,&ierr);    
     ErrorGmsh(ierr);
     
-    int plate[] = {idPlate};
-    int notch[] = {idPlate, idNotch};
-    int hole[]  = {idPlate, idHole};
+    int plate[] = {2, idPlate};
+    int notch[] = {2, idNotch};
+    int hole[]  = {2, idHole};
 
     gmshModelOccCut(plate, sizeof(plate)/sizeof(plate[0]), notch, sizeof(notch)/sizeof(notch[0]), NULL, NULL, NULL, NULL, NULL, -1, 1, 1, &ierr); 
     ErrorGmsh(ierr);
