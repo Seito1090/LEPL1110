@@ -1,7 +1,14 @@
 #include "fem.h"
 
 
-
+double InterpolationHermite(double d, double* dLoc, double* dfLoc, double* fLoc){
+    double t = (d - dLoc[0])/(dLoc[1] - dLoc[0]);
+    double h00 = 2 * t*t*t - 3*t*t + 1;
+    double h10 = t*t*t - 2*t*t + t;
+    double h01 = -2*t*t*t + 3*t*t; 
+    double h11 = t*t*t - t*t;
+    return h00*fLoc[0] + h10*(dLoc[1] - dLoc[0])*dfLoc[0] + h01*fLoc[1] + h11*(dLoc[1] - dLoc[0])*dfLoc[1];
+}
 
 double geoSize(double x, double y){
 
