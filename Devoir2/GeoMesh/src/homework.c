@@ -1,7 +1,7 @@
 #include "fem.h"
 
 
-double InterpolationHermite(double d, double* dLoc, double* dfLoc, double* fLoc){
+double InterpolationHermite(double d, double *dLoc, double* dfLoc, double* fLoc){
     double t = (d - dLoc[0])/(dLoc[1] - dLoc[0]);
     double h00 = 2 * t*t*t - 3*t*t + 1;
     double h10 = t*t*t - 2*t*t + t;
@@ -34,9 +34,36 @@ double geoSize(double x, double y){
 //     
 // Your contribution starts here ....
 //
-    double dist_to_notch = sqrt(pow(x - x0, 2) + pow(y - y0, 2));
-    double dist_to_hole = sqrt(pow(x - x1, 2) + pow(y - y1, 2));
+    double interpolation;
+    double distnotch = sqrt(pow(x - x0, 2) + pow(y - y0, 2)) - r0;
+    double disthole = sqrt(pow(x - x1, 2) + pow(y - y1, 2)) - r1;
+    
+    double dfLoc[2] = {0.0, 0.0};  // valeurs de f' aux CL
 
+    if ( disthole < d1 && distnotch < d0){ // intersection des deux champs
+	  double dLoc0[2] = {0.0, d0}; // points conditions limites
+        double fLoc0[2] = {h0, h}; // valeurs de f aux CL
+        double dLoc1[2] = {0.0, d1}; // points conditions limites
+        double fLoc1[2] = {h1, h}; // valeurs de f aux CL
+        double HInt0 = InterpolationHermite(distnotch, dLoc0, fLoc0, dfLoc);
+        double HInt1 = InterpolationHermite(disthole, dLoc1, fLoc1, dfLoc);
+        interpolation = min(min(HInt0, HInt1),h);
+    }
+    else if ( distnotch < d0 ){
+	  double dLoc0[2] = {0.0, d0}; // points conditions limites
+        double fLoc0[2] = {h0, h}; // valeurs de f aux CL
+        double hermInt = InterpolationHermite(distnotch, dLoc0, fLoc0, dfLoc);
+        interpolation = min(hermInt, h);
+    }
+    else if ( disthole < d1 ){
+        double dLoc1[2] = {0.0, d1}; // points conditions limites
+        double fLoc1[2] = {h1, h}; // valeurs de f aux CL
+        double hermInt = InterpolationHermite(disthole, dLoc1, fLoc1, dfLoc);
+        interpolation = min(hermInt, h);
+    }
+    else(interpolation = h;)
+    return interpolation;
+    /*else{interpolation = h;}
     // Check if the point is inside the notch or hole
     if (dist_to_notch < r0) {
         return h0; // Size inside the notch
@@ -45,7 +72,7 @@ double geoSize(double x, double y){
     } else {
         return h; // Default size outside the notch and hole
     }
-    
+    */
 //   
 // Your contribution ends here :-)
 //
