@@ -1,7 +1,7 @@
 #include "fem.h"
 
 
-double InterpolationHermite(double d, double *dLoc, double* dfLoc, double* fLoc){
+double InterpolationHermite(double d, double *dLoc, double *fLoc, double *dfLoc){
     double t = (d - dLoc[0])/(dLoc[1] - dLoc[0]);
     double h00 = 2 * t*t*t - 3*t*t + 1;
     double h10 = t*t*t - 2*t*t + t;
@@ -34,6 +34,12 @@ double geoSize(double x, double y){
 //     
 // Your contribution starts here ....
 //
+    double min(double a, double b){
+	    if(a>b){
+		    return b;
+	    }
+	    return a;
+    }
     double interpolation;
     double distnotch = sqrt(pow(x - x0, 2) + pow(y - y0, 2)) - r0;
     double disthole = sqrt(pow(x - x1, 2) + pow(y - y1, 2)) - r1;
@@ -52,16 +58,16 @@ double geoSize(double x, double y){
     else if ( distnotch < d0 ){
 	  double dLoc0[2] = {0.0, d0}; // points conditions limites
         double fLoc0[2] = {h0, h}; // valeurs de f aux CL
-        double hermInt = InterpolationHermite(distnotch, dLoc0, fLoc0, dfLoc);
-        interpolation = min(hermInt, h);
+        double HInt = InterpolationHermite(distnotch, dLoc0, fLoc0, dfLoc);
+        interpolation = min(HInt, h);
     }
     else if ( disthole < d1 ){
         double dLoc1[2] = {0.0, d1}; // points conditions limites
         double fLoc1[2] = {h1, h}; // valeurs de f aux CL
         double hermInt = InterpolationHermite(disthole, dLoc1, fLoc1, dfLoc);
-        interpolation = min(hermInt, h);
+        interpolation = min(HInt, h);
     }
-    else(interpolation = h;)
+    else{interpolation = h;}
     return interpolation;
     /*else{interpolation = h;}
     // Check if the point is inside the notch or hole
