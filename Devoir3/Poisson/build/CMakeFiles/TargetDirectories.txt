@@ -1,9 +1,0 @@
-/home/seito/Documents/Classes/LEPL1110/Devoirs/Devoir3/Poisson/build/CMakeFiles/myFem.dir
-/home/seito/Documents/Classes/LEPL1110/Devoirs/Devoir3/Poisson/build/CMakeFiles/run.dir
-/home/seito/Documents/Classes/LEPL1110/Devoirs/Devoir3/Poisson/build/CMakeFiles/edit_cache.dir
-/home/seito/Documents/Classes/LEPL1110/Devoirs/Devoir3/Poisson/build/CMakeFiles/rebuild_cache.dir
-/home/seito/Documents/Classes/LEPL1110/Devoirs/Devoir3/Poisson/build/glfw/CMakeFiles/edit_cache.dir
-/home/seito/Documents/Classes/LEPL1110/Devoirs/Devoir3/Poisson/build/glfw/CMakeFiles/rebuild_cache.dir
-/home/seito/Documents/Classes/LEPL1110/Devoirs/Devoir3/Poisson/build/glfw/src/CMakeFiles/glfw.dir
-/home/seito/Documents/Classes/LEPL1110/Devoirs/Devoir3/Poisson/build/glfw/src/CMakeFiles/edit_cache.dir
-/home/seito/Documents/Classes/LEPL1110/Devoirs/Devoir3/Poisson/build/glfw/src/CMakeFiles/rebuild_cache.dir

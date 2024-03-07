@@ -1,1 +1,0 @@
-/usr/bin/gcc -g CMakeFiles/myFem.dir/src/fem.c.o CMakeFiles/myFem.dir/src/glfem.c.o CMakeFiles/myFem.dir/src/homework.c.o CMakeFiles/myFem.dir/src/main.c.o -o myFem  glfw/src/libglfw3.a /usr/lib64/libGL.so /usr/lib64/librt.a -lm -ldl /usr/lib64/libX11.so 
