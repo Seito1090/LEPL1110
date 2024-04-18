@@ -1464,11 +1464,19 @@ Number of triangles 593
    592 :    396    424    389
 Number of domains 18
   Domain :      0 
+<<<<<<< HEAD
+  Name : underRW
+  Number of elements :     10
+     0     1     2     3     4     5     6     7     8     9
+  Domain :      1 
+  Name : RWL
+=======
   Name : Something
   Number of elements :     10
      0     1     2     3     4     5     6     7     8     9
   Domain :      1 
   Name : SomethingElse
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
   Number of elements :     43
     10    11    12    13    14    15    16    17    18    19
     20    21    22    23    24    25    26    27    28    29
@@ -1476,6 +1484,17 @@ Number of domains 18
     40    41    42    43    44    45    46    47    48    49
     50    51    52
   Domain :      2 
+<<<<<<< HEAD
+  Name : upperRW
+  Number of elements :     10
+    53    54    55    56    57    58    59    60    61    62
+  Domain :      3 
+  Name : underLW
+  Number of elements :     10
+    63    64    65    66    67    68    69    70    71    72
+  Domain :      4 
+  Name : LWL
+=======
   Name : Entity 29 
   Number of elements :     10
     53    54    55    56    57    58    59    60    61    62
@@ -1485,6 +1504,7 @@ Number of domains 18
     63    64    65    66    67    68    69    70    71    72
   Domain :      4 
   Name : Entity 35 
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
   Number of elements :     43
     73    74    75    76    77    78    79    80    81    82
     83    84    85    86    87    88    89    90    91    92
@@ -1492,6 +1512,21 @@ Number of domains 18
    103   104   105   106   107   108   109   110   111   112
    113   114   115
   Domain :      5 
+<<<<<<< HEAD
+  Name : upperLW
+  Number of elements :     10
+   116   117   118   119   120   121   122   123   124   125
+  Domain :      6 
+  Name : VStabL
+  Number of elements :      4
+   126   127   128   129
+  Domain :      7 
+  Name : VStabR
+  Number of elements :      4
+   130   131   132   133
+  Domain :      8 
+  Name : HStabR
+=======
   Name : Entity 36 
   Number of elements :     10
    116   117   118   119   120   121   122   123   124   125
@@ -1505,15 +1540,51 @@ Number of domains 18
    130   131   132   133
   Domain :      8 
   Name : Entity 47 
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
   Number of elements :     18
    134   135   136   137   138   139   140   141   142   143
    144   145   146   147   148   149   150   151
   Domain :      9 
+<<<<<<< HEAD
+  Name : HStabL
+=======
   Name : Entity 52 
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
   Number of elements :     18
    152   153   154   155   156   157   158   159   160   161
    162   163   164   165   166   167   168   169
   Domain :     10 
+<<<<<<< HEAD
+  Name : Fuselage0
+  Number of elements :      4
+   170   171   172   173
+  Domain :     11 
+  Name : Wheels
+  Number of elements :      9
+   174   175   176   177   178   179   180   181   182
+  Domain :     12 
+  Name : Fuselage1
+  Number of elements :      4
+   183   184   185   186
+  Domain :     13 
+  Name : Fuselage2
+  Number of elements :      6
+   187   188   189   190   191   192
+  Domain :     14 
+  Name : Fuselage3
+  Number of elements :      3
+   193   194   195
+  Domain :     15 
+  Name : Fuselage4
+  Number of elements :      3
+   196   197   198
+  Domain :     16 
+  Name : Fuselage5
+  Number of elements :      6
+   199   200   201   202   203   204
+  Domain :     17 
+  Name : Cab
+=======
   Name : Entity 53 
   Number of elements :      4
    170   171   172   173
@@ -1543,6 +1614,7 @@ Number of domains 18
    199   200   201   202   203   204
   Domain :     17 
   Name : Entity 60 
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
   Number of elements :    176
    205   206   207   208   209   210   211   212   213   214
    215   216   217   218   219   220   221   222   223   224

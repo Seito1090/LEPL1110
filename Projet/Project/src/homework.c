@@ -1,8 +1,13 @@
 #include "fem.h"
 
 // Il faut un fifrelin generaliser ce code.....
+<<<<<<< HEAD
+//  (1) Ajouter l'axisymétrique !    (mandatory) -> symétrie en Y, résoudre juste sur une demi-section du mesh et puis copier
+//  (2) Ajouter les conditions de Neumann !   (mandatory) Neumann -> force Dirichlet -> déplacement
+=======
 //  (1) Ajouter l'axisymétrique !    (mandatory)
 //  (2) Ajouter les conditions de Neumann !   (mandatory)
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
 //  (3) Ajouter les conditions en normal et tangentiel !   (strongly advised)
 //  (4) Et remplacer le solveur plein par un truc un fifrelin plus subtil  (mandatory)
 
@@ -76,6 +81,78 @@ void femElasticityAssembleElements(femProblem *theProblem) {
   }
 }
 
+<<<<<<< HEAD
+  void femElasticityAssembleNeumann(femProblem *theProblem) {
+    femFullSystem *theSystem = theProblem->system;
+    femIntegration *theRule = theProblem->ruleEdge;
+    femDiscrete *theSpace = theProblem->spaceEdge;
+    femGeo *theGeometry = theProblem->geometry;
+    femNodes *theNodes = theGeometry->theNodes;
+    femMesh *theEdges = theGeometry->theEdges;
+    double x[2], y[2], phi[2];
+    int iBnd, iElem, iInteg, iEdge, i, j, d, map[2];
+    int nLocal = 2;
+    double *B = theSystem->B;
+
+    for (iBnd = 0; iBnd < theProblem->nBoundaryConditions; iBnd++) {
+      femBoundaryCondition *theCondition = theProblem->conditions[iBnd];
+      femBoundaryType type = theCondition->type;
+      double value = theCondition->value1;
+
+      if(type != NEUMANN_X && type != NEUMANN_Y && type != NEUMANN_N && type != NEUMANN_T){
+        continue;
+      }
+
+      for (iEdge = 0; iEdge < theCondition->domain->nElem; iEdge++) {
+        iElem = theCondition->domain->elem[iEdge];
+        for (j = 0; j < nLocal; j++) {
+          map[j] = theEdges->elem[iElem * nLocal + j];
+          x[j] = theNodes->X[map[j]];
+          y[j] = theNodes->Y[map[j]];
+        }
+
+        double tx = x[1] - x[0];
+        double ty = y[1] - y[0];
+        double length = hypot(tx, ty);
+        double jac = length / 2.0;
+        
+        double f_x = 0.0;
+        double f_y = 0.0;
+        double f_n = 0.0;
+        double f_t = 0.0;
+        if (type == NEUMANN_X) {
+          f_x = value;
+        }
+        if (type == NEUMANN_Y) {
+          f_y = value;
+        }
+        
+        //
+        // A completer :-)
+        // Attention, pour le normal tangent on calcule la normale (sortante) au SEGMENT, surtout PAS celle de constrainedNodes
+        // Une petite aide pour le calcul de la normale :-)
+        // Calculate normal and tangent vectors
+        double nx =  ty / length;
+        double ny = -tx / length;
+        double txn = -ny; // Tangent in x direction
+        double tyn = nx;  // Tangent in y direction
+
+        if (type == NEUMANN_N) {
+          f_n = value;
+        }
+        if (type == NEUMANN_T) {
+          f_t = value;
+        }
+
+        for (iInteg = 0; iInteg < theRule->n; iInteg++) {
+          double xsi = theRule->xsi[iInteg];
+          double weight = theRule->weight[iInteg];
+          femDiscretePhi(theSpace, xsi, phi);
+          for (i = 0; i < theSpace->n; i++) {
+            B[2 * map[i] + 0] += jac * weight * phi[i] * (f_x + f_n * nx + f_t * txn);
+            B[2 * map[i] + 1] += jac * weight * phi[i] * (f_y + f_n * ny + f_t * tyn);
+          }
+=======
 void femElasticityAssembleNeumann(femProblem *theProblem) {
   femFullSystem *theSystem = theProblem->system;
   femIntegration *theRule = theProblem->ruleEdge;
@@ -133,11 +210,15 @@ void femElasticityAssembleNeumann(femProblem *theProblem) {
         for (i = 0; i < theSpace->n; i++) {
           B[2*map[i] + 0] += jac * weight * phi[i] * f_x;
           B[2*map[i] + 1] += jac * weight * phi[i] * f_y;
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
         }
       }
     }
   }
+<<<<<<< HEAD
+=======
 }
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
 
 void femElasticityApplyDirichlet(femProblem *theProblem) {
   femFullSystem *theSystem = theProblem->system;
@@ -169,30 +250,73 @@ void femElasticityApplyDirichlet(femProblem *theProblem) {
       double value = theConstrainedNode->value1;
       double nx = theConstrainedNode->nx;
       double ny = theConstrainedNode->ny;
+<<<<<<< HEAD
+      double norm = sqrt(nx * nx + ny * ny);
+      // Normalize the normal components
+      nx /= norm;
+      ny /= norm;
+      femFullSystemConstrain(theSystem, 2 * node + 0, value * nx);
+      femFullSystemConstrain(theSystem, 2 * node + 1, value * ny);
+    }
+
+=======
       // A completer :-)
     }
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
     if (type == DIRICHLET_T) {
       double value = theConstrainedNode->value1;
       double nx = theConstrainedNode->nx;
       double ny = theConstrainedNode->ny;
+<<<<<<< HEAD
+      double norm = sqrt(nx * nx + ny * ny);
+      // Normalize the tangent components
+      double tx = -ny / norm; // Tangent in x direction
+      double ty = nx / norm;  // Tangent in y direction
+      femFullSystemConstrain(theSystem, 2 * node + 0, value * tx);
+      femFullSystemConstrain(theSystem, 2 * node + 1, value * ty);
+    }
+
+=======
       // A completer :-)
     }
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
     if (type == DIRICHLET_NT) {
       double value_n = theConstrainedNode->value1;
       double value_t = theConstrainedNode->value2;
       double nx = theConstrainedNode->nx;
       double ny = theConstrainedNode->ny;
+<<<<<<< HEAD
+      double norm = sqrt(nx * nx + ny * ny);
+      // Normalize the normal and tangent components
+      nx /= norm;
+      ny /= norm;
+      double tx = -ny; // Tangent in x direction
+      double ty = nx;  // Tangent in y direction
+      femFullSystemConstrain(theSystem, 2 * node + 0, value_n * nx + value_t * tx);
+      femFullSystemConstrain(theSystem, 2 * node + 1, value_n * ny + value_t * ty);
+    }
+
+=======
       // A completer :-)
     }
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
   }
 }
 
 double *femElasticitySolve(femProblem *theProblem) {
+<<<<<<< HEAD
+  femElasticityAssembleElements(theProblem); // si bande adapt ca
+  femElasticityAssembleNeumann(theProblem);
+  femElasticityApplyDirichlet(theProblem);
+
+  double *soluce = femFullSystemEliminate(theProblem->system); //firfelin ici 
+=======
   femElasticityAssembleElements(theProblem);
   femElasticityAssembleNeumann(theProblem);
   femElasticityApplyDirichlet(theProblem);
 
   double *soluce = femFullSystemEliminate(theProblem->system);
+>>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
   memcpy(theProblem->soluce, soluce, theProblem->system->size * sizeof(double));
   return theProblem->soluce;
 }
