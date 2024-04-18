@@ -75,14 +75,15 @@ mesh = Mesh("../Project/data/mesh.txt")
 print(mesh)
 uv = np.loadtxt("../Project/data/UV.txt", skiprows=1, delimiter=",")
 uv_norm = np.linalg.norm(uv, axis=1)
-factor = 40
+for factor in range(-15, 15):
+    cb = mesh.plotfield(uv_norm, uv*factor, cmap="turbo")
+    plt.colorbar(cb)
+    mesh.plot(uv*factor, lw=0.8, c="k")
+    plt.gca().set_aspect("equal")
+    plt.grid(alpha=0.2)
+    plt.savefig(f"images_gif/plot_{factor+15}.png")
+    plt.show()
 
-cb = mesh.plotfield(uv_norm, uv*factor, cmap="turbo")
-plt.colorbar(cb)
-mesh.plot(uv*factor, lw=0.8, c="k")
-plt.gca().set_aspect("equal")
-plt.grid(alpha=0.2)
-plt.show()
 
 
 # %%
