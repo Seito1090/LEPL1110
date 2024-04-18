@@ -4,11 +4,14 @@ Poisson ratio      :  3.0000000e-01
 Mass density       :  7.8500000e+03  
 Gravity-X          :  0.0000000e+00  
 Gravity-Y          : -9.8100000e+00  
-Boundary condition :  Neumann-Y          =  2.0000000e+05,            nan : underRW
-Boundary condition :  Neumann-Y          = -2.0000000e+05,            nan : upperRW
-Boundary condition :  Neumann-Y          =  2.0000000e+05,            nan : underLW
-Boundary condition :  Neumann-Y          = -2.0000000e+05,            nan : upperLW
-Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : Wheels
+Boundary condition :  Neumann-Y          =  1.5000000e+06,            nan : underRW
+Boundary condition :  Dirichlet-X        =  0.0000000e+00,            nan : underRW
+Boundary condition :  Neumann-Y          = -6.5400000e+05,            nan : upperRW
+Boundary condition :  Neumann-Y          =  1.5000000e+06,            nan : underLW
+Boundary condition :  Dirichlet-X        =  0.0000000e+00,            nan : underLW
+Boundary condition :  Neumann-Y          = -6.5400000e+05,            nan : upperLW
+Boundary condition :  Dirichlet-XY       =  0.0000000e+00,  0.0000000e+00 : Wheels
+Boundary condition :  Neumann-Y          = -6.5400000e+05,            nan : Wheels
 Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : Cab
 Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : Fuselage0
 Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : Fuselage1

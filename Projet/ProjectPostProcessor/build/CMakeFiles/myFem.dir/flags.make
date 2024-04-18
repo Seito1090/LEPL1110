@@ -4,7 +4,7 @@
 # compile C with /usr/bin/gcc
 C_DEFINES = -Dgraphic
 
-C_INCLUDES = -I/home/seito/Documents/Classes/LEPL1110/Projet/ProjectPostProcessor/glfw/include -I/home/seito/Documents/Classes/LEPL1110/Projet/ProjectPostProcessor/gmsh/gmsh-4.12.2-Linux64-sdk/include
+C_INCLUDES = -I/home/seito/Documents/Classes/Bac3/LEPL1110/Projet/ProjectPostProcessor/glfw/include -I/home/seito/Documents/Classes/Bac3/LEPL1110/Projet/ProjectPostProcessor/gmsh/gmsh-4.12.2-Linux64-sdk/include
 
 C_FLAGS = -g
 

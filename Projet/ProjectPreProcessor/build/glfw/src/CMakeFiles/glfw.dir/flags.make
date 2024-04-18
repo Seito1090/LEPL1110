@@ -4,7 +4,7 @@
 # compile C with /usr/bin/gcc
 C_DEFINES = -D_GLFW_USE_CONFIG_H
 
-C_INCLUDES = -I/home/seito/Documents/Classes/LEPL1110/Projet/ProjectPreProcessor/glfw/include -I/home/seito/Documents/Classes/LEPL1110/Projet/ProjectPreProcessor/glfw/src -I/home/seito/Documents/Classes/LEPL1110/Projet/ProjectPreProcessor/build/glfw/src
+C_INCLUDES = -I/home/seito/Documents/Classes/Bac3/LEPL1110/Projet/ProjectPreProcessor/glfw/include -I/home/seito/Documents/Classes/Bac3/LEPL1110/Projet/ProjectPreProcessor/glfw/src -I/home/seito/Documents/Classes/Bac3/LEPL1110/Projet/ProjectPreProcessor/build/glfw/src
 
 C_FLAGS = -g -fPIC -Wall
 

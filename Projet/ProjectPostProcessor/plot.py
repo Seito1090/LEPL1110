@@ -75,11 +75,11 @@ mesh = Mesh("../Project/data/mesh.txt")
 print(mesh)
 uv = np.loadtxt("../Project/data/UV.txt", skiprows=1, delimiter=",")
 uv_norm = np.linalg.norm(uv, axis=1)
-factor = 5e4
+factor = 40
 
 cb = mesh.plotfield(uv_norm, uv*factor, cmap="turbo")
 plt.colorbar(cb)
-mesh.plot(uv*factor, lw=0.2, c="k")
+mesh.plot(uv*factor, lw=0.8, c="k")
 plt.gca().set_aspect("equal")
 plt.grid(alpha=0.2)
 plt.show()

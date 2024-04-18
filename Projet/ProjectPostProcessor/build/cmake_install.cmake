@@ -1,4 +1,4 @@
-# Install script for directory: /home/seito/Documents/Classes/LEPL1110/Projet/ProjectPostProcessor
+# Install script for directory: /home/seito/Documents/Classes/Bac3/LEPL1110/Projet/ProjectPostProcessor
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/seito/Documents/Classes/LEPL1110/Projet/ProjectPostProcessor/build/glfw/cmake_install.cmake")
+  include("/home/seito/Documents/Classes/Bac3/LEPL1110/Projet/ProjectPostProcessor/build/glfw/cmake_install.cmake")
 
 endif()
 
@@ -56,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/seito/Documents/Classes/LEPL1110/Projet/ProjectPostProcessor/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/seito/Documents/Classes/Bac3/LEPL1110/Projet/ProjectPostProcessor/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

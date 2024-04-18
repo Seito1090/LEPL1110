@@ -1,4 +1,4 @@
-# Install script for directory: /home/seito/Documents/Classes/LEPL1110/Projet/ProjectPostProcessor/glfw/src
+# Install script for directory: /home/seito/Documents/Classes/Bac3/LEPL1110/Projet/ProjectPostProcessor/glfw/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -66,16 +66,20 @@ int main(void) {
   double rho = 7.85e3;
   double gx = 0;
   double gy = -9.81;
-  double lift = 200e3;
-  double weight = 200e3;
+  double lift = 300e4;
+  double mass = 200e3;
+  double weight = mass * gy;
 
   femProblem *theProblem = femElasticityCreate(theGeometry, E, nu, rho, gx, gy, PLANAR_STRAIN);
-  femElasticityAddBoundaryCondition(theProblem, "underRW", NEUMANN_Y, lift, NAN); //
-  femElasticityAddBoundaryCondition(theProblem, "upperRW", NEUMANN_Y, -weight, NAN); //
-  femElasticityAddBoundaryCondition(theProblem, "underLW", NEUMANN_Y, lift, NAN);
-  femElasticityAddBoundaryCondition(theProblem, "upperLW", NEUMANN_Y, -weight, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "underRW", NEUMANN_Y, lift/2, NAN); 
+  femElasticityAddBoundaryCondition(theProblem, "underRW", DIRICHLET_X, 0, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "upperRW", NEUMANN_Y, weight/3, NAN); 
+  femElasticityAddBoundaryCondition(theProblem, "underLW", NEUMANN_Y, lift/2, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "underLW", DIRICHLET_X, 0, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "upperLW", NEUMANN_Y, weight/3, NAN);
   //femElasticityAddBoundaryCondition(theProblem, "Wheels", DIRICHLET_XY, 0, 0);
-  femElasticityAddBoundaryCondition(theProblem, "Wheels", DIRICHLET_NT, 0, 0);
+  femElasticityAddBoundaryCondition(theProblem, "Wheels", DIRICHLET_XY, 0, 0);
+  femElasticityAddBoundaryCondition(theProblem, "Wheels", NEUMANN_Y, weight/3, NAN);
   femElasticityAddBoundaryCondition(theProblem, "Cab", DIRICHLET_NT, 0, 0);
   femElasticityAddBoundaryCondition(theProblem, "Fuselage0", DIRICHLET_NT, 0, 0);
   femElasticityAddBoundaryCondition(theProblem, "Fuselage1", DIRICHLET_NT, 0, 0);
@@ -106,7 +110,7 @@ int main(void) {
   //
   //  -4- Visualisation
   //
-
+/*
   int mode = 1;
   int domain = 0;
   int freezingButton = FALSE;
@@ -157,7 +161,7 @@ int main(void) {
     glfwSwapBuffers(window);
     glfwPollEvents();
   } while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) != 1);
-
+  */
   // Check if the ESC key was pressed or the window was closed
 
   free(meshSizeField);

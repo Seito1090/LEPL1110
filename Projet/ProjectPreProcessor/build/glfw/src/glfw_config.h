@@ -35,26 +35,26 @@
 //========================================================================
 
 // Define this to 1 if building GLFW for X11
-#cmakedefine _GLFW_X11
+#define _GLFW_X11
 // Define this to 1 if building GLFW for Win32
-#cmakedefine _GLFW_WIN32
+/* #undef _GLFW_WIN32 */
 // Define this to 1 if building GLFW for Cocoa
-#cmakedefine _GLFW_COCOA
+/* #undef _GLFW_COCOA */
 // Define this to 1 if building GLFW for Wayland
-#cmakedefine _GLFW_WAYLAND
+/* #undef _GLFW_WAYLAND */
 // Define this to 1 if building GLFW for Mir
-#cmakedefine _GLFW_MIR
+/* #undef _GLFW_MIR */
 // Define this to 1 if building GLFW for OSMesa
-#cmakedefine _GLFW_OSMESA
+/* #undef _GLFW_OSMESA */
 
 // Define this to 1 if building as a shared library / dynamic library / DLL
-#cmakedefine _GLFW_BUILD_DLL
+/* #undef _GLFW_BUILD_DLL */
 // Define this to 1 to use Vulkan loader linked statically into application
-#cmakedefine _GLFW_VULKAN_STATIC
+/* #undef _GLFW_VULKAN_STATIC */
 
 // Define this to 1 to force use of high-performance GPU on hybrid systems
-#cmakedefine _GLFW_USE_HYBRID_HPG
+/* #undef _GLFW_USE_HYBRID_HPG */
 
 // Define this to 1 if xkbcommon supports the compose key
-#cmakedefine HAVE_XKBCOMMON_COMPOSE_H
+/* #undef HAVE_XKBCOMMON_COMPOSE_H */
 

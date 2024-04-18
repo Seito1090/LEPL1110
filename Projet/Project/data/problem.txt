@@ -1,15 +1,17 @@
 Type of problem    :  Planar strains 
 Young modulus      :  2.1100000e+11  
-<<<<<<< HEAD
 Poisson ratio      :  3.0000000e-01  
 Mass density       :  7.8500000e+03  
 Gravity-X          :  0.0000000e+00  
 Gravity-Y          : -9.8100000e+00  
-Boundary condition :  Neumann-Y          =  2.0000000e+05,            nan : underRW
-Boundary condition :  Neumann-Y          = -2.0000000e+05,            nan : upperRW
-Boundary condition :  Neumann-Y          =  2.0000000e+05,            nan : underLW
-Boundary condition :  Neumann-Y          = -2.0000000e+05,            nan : upperLW
-Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : Wheels
+Boundary condition :  Neumann-Y          =  1.5000000e+06,            nan : underRW
+Boundary condition :  Dirichlet-X        =  0.0000000e+00,            nan : underRW
+Boundary condition :  Neumann-Y          = -6.5400000e+05,            nan : upperRW
+Boundary condition :  Neumann-Y          =  1.5000000e+06,            nan : underLW
+Boundary condition :  Dirichlet-X        =  0.0000000e+00,            nan : underLW
+Boundary condition :  Neumann-Y          = -6.5400000e+05,            nan : upperLW
+Boundary condition :  Dirichlet-XY       =  0.0000000e+00,  0.0000000e+00 : Wheels
+Boundary condition :  Neumann-Y          = -6.5400000e+05,            nan : Wheels
 Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : Cab
 Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : Fuselage0
 Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : Fuselage1
@@ -19,11 +21,3 @@ Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : Fuse
 Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : Fuselage5
 Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : HStabL
 Boundary condition :  Dirichlet-NT       =  0.0000000e+00,  0.0000000e+00 : HStabR
-=======
-Poisson ratio      :  1.0000000e-01  
-Mass density       :  7.8500000e+02  
-Gravity-X          :  4.0000000e+00  
-Gravity-Y          : -9.8100000e+00  
-Boundary condition :  Dirichlet-XY       =  0.0000000e+00,  0.0000000e+00 : Something
-Boundary condition :  Dirichlet-Y        =  0.0000000e+00,            nan : SomethingElse
->>>>>>> 9ca7dbd94a1e3a1db5b6bdc7362a44d2b2c33508
