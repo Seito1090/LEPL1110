@@ -773,10 +773,10 @@ void femElasticityFree(femProblem *theProblem) {
   for (int i = 0; i < theProblem->nBoundaryConditions; i++)
     free(theProblem->conditions[i]);
   free(theProblem->conditions);
-  free(theProblem->soluce);
-  free(theProblem->residuals);
-  free(theProblem->constrainedNodes);
-  free(theProblem);
+  //free(theProblem->soluce);
+  //free(theProblem->residuals);
+  //free(theProblem->constrainedNodes);
+  //free(theProblem);
 }
 
 /*

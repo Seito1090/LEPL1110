@@ -14,12 +14,12 @@
 
 int main(void) {
   femGeo *theGeometry = geoGetGeometry();
-  geoMeshRead("../data/mesh.txt");
-  femProblem *theProblem = femElasticityRead(theGeometry, "../data/problem.txt");
+  geoMeshRead("../../data/mesh.txt");
+  femProblem *theProblem = femElasticityRead(theGeometry, "../../data/problem.txt");
   femElasticityPrint(theProblem);
   double *theSoluce = femElasticitySolve(theProblem);
   int nNodes = theGeometry->theNodes->nNodes;
-  femSolutionWrite(nNodes, 2, theSoluce, "../data/UV.txt");
+  femSolutionWrite(nNodes, 2, theSoluce, "../../data/UV.txt");
   femElasticityFree(theProblem);
   geoFree();
   return 0;
