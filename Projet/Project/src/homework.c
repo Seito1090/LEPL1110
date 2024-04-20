@@ -226,11 +226,11 @@ void femElasticityApplyDirichlet(femProblem *theProblem) {
 }
 
 double *femElasticitySolve(femProblem *theProblem) {
-  femElasticityAssembleElements(theProblem); // si bande adapt ca
+  femElasticityAssembleElements(theProblem);
   femElasticityAssembleNeumann(theProblem);
   femElasticityApplyDirichlet(theProblem);
 
-  double *soluce = femFullSystemEliminate(theProblem->system); //firfelin ici 
+  double *soluce = femFullSystemEliminate(theProblem->system);
   memcpy(theProblem->soluce, soluce, theProblem->system->size * sizeof(double));
   return theProblem->soluce;
 }
@@ -347,7 +347,7 @@ void bandFemMeshRenumber(femMesh *theMesh, femRenumType renumType) {
 
     for (i = 0; i < theMesh->nodes->nNodes; i++)
         theMesh->nodes->number[inverse[i]] = i;
-
+    
     free(inverse);
 }
 //Fonction pour calculer la bande
@@ -356,7 +356,7 @@ int bandFemMeshComputeBand(femMesh *theMesh){
     return(myBand);
 }
 //Fonction pour assembler les éléments
-void bandFemSystemAssemble(femBandSystem* myBandSystem, double *Aloc, double *Bloc, int *map, int nLoc){
+void bandFemSystemAssemble(femFullSystem* myBandSystem, double *Aloc, double *Bloc, int *map, int nLoc){
     for ( int i = 0; i < nLoc ; i ++) {
         int myRow = map [ i ];
         for ( int j = 0; j < nLoc ; j ++) {
@@ -384,27 +384,27 @@ double  *bandFemSystemEliminate(femBandSystem *myBand){
         if (fabs(A[k][k]) <= 1e-4) { Error("Cannot eliminate with such a pivot"); }
         // Limite de la ligne rouge
         jend = MIN ( k + band , size ) ;
-        for ( i = k +1 ; i < jend ; i ++) {
+        for (i = k+1 ; i < jend ; i ++) {
             // On recupere l"element symetrique
-            factor = A [ k ][ i ] / A [ k ][ k ];
-            for ( j = i ; j < jend ; j ++){
-                A [ i ][ j ] = A [ i ][ j ] - A [ k ][ j ] * factor ;
+            factor = A [k][i] / A [k][k];
+            for (j = i ; j < jend ; j ++){
+                A [i][j] = A [i][j] - A [k][j] * factor ;
             }
-            B[ i ] = B [ i ] - B [ k ] * factor ;
+            B[i] = B [i] - B [k] * factor ;
         }
     }
     /* Back - substitution */
-    for (i = ( size -1) ; i >= 0 ; i--){
+    for (i = (size -1) ; i >= 0 ; i--){
         factor = 0;
 
         // Limite de la ligne rouge
-        jend = MIN ( i + band , size ) ;
+        jend = MIN (i + band , size) ;
         for ( j = i +1 ; j < jend ; j ++){
-            factor += A [ i ][ j ] * B [ j ];
+            factor += A [i][j] * B [j];
         }
-        B[ i ] = ( B [ i ] - factor ) / A [ i ][ i ];
+        B[i] = ( B [i] - factor) / A [i][i];
     }
-    return ( myBand -> B ) ;
+    return (myBand -> B) ;
 }
 
 void bandFemElasticityAssembleElements(femProblem *theProblem) {
@@ -474,7 +474,7 @@ void bandFemElasticityAssembleElements(femProblem *theProblem) {
         B[mapY[i]] += phi[i] * gy * rho * jac * weight;
       }
     }
-    bandFemSystemAssemble(theSystem, A, B, map, nLocal);
+    bandFemSystemAssemble(theSystem, A[0], B, map, nLocal);
   }
 }
 
@@ -482,7 +482,7 @@ double *bandFemElasticitySolve(femProblem *theProblem) {
   bandFemMeshRenumber(theProblem->geometry->theElements, FEM_XNUM);
   bandFemElasticityAssembleElements(theProblem); 
   femElasticityAssembleNeumann(theProblem);
-  femElasticityApplyDirichlet(theProblem);
+  //femElasticityApplyDirichlet(theProblem);
 
   double *soluce = bandFemSystemEliminate((femBandSystem *)theProblem->system); 
   memcpy(theProblem->soluce, soluce, theProblem->system->size * sizeof(double));

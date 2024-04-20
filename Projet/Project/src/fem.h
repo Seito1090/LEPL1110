@@ -152,7 +152,7 @@ void axisymetriqueAssembly(femProblem *theProblem);
 double *femElasticitySolveAxisymetrique(femProblem *theProblem);
 void bandFemMeshRenumber(femMesh *theMesh, femRenumType renumType) ;
 int bandFemMeshComputeBand(femMesh *theMesh);
-void bandFemSystemAssemble(femBandSystem* myBandSystem, double *Aloc, double *Bloc, int *map, int nLoc);
+void bandFemSystemAssemble(femFullSystem* myBandSystem, double *Aloc, double *Bloc, int *map, int nLoc);
 double  *bandFemSystemEliminate(femBandSystem *myBand);
 void bandFemElasticityAssembleElements(femProblem *theProblem);
 double *bandFemElasticitySolve(femProblem *theProblem);
