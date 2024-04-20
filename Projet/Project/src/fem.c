@@ -783,6 +783,8 @@ femProblem *femElasticityRead(femGeo *theGeometry, const char *filename) {
 
   int nNodes = theGeometry->theNodes->nNodes;
   int size = 2 * nNodes;
+  int* number = malloc(sizeof(int)*nNodes);
+  theGeometry->theNodes->number = number;
   theProblem->soluce = malloc(size * sizeof(double));
   theProblem->residuals = malloc(size * sizeof(double));
   for (int i = 0; i < size; i++) {

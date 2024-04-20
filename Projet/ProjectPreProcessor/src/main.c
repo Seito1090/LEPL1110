@@ -49,33 +49,27 @@ int main(void) {
   //  -2- Definition du probleme
   //
 
-  double E = 211.e9;
+  double E = 294e9;
   double nu = 0.3;
   double rho = 7.85e3;
   double gx = 0;
-  double gy = -9.81;
-  double lift = 300e4;
-  double mass = 200e3;
+  double gy = 9.81;
+  double lift = -3.5e6;
+  double mass = 398e3;
   double weight = mass * gy;
 
   femProblem *theProblem = femElasticityCreate(theGeometry, E, nu, rho, gx, gy, PLANAR_STRAIN);
-  femElasticityAddBoundaryCondition(theProblem, "underRW", NEUMANN_Y, lift/2, NAN); 
+  femElasticityAddBoundaryCondition(theProblem, "underRW", NEUMANN_Y, lift, NAN); 
   femElasticityAddBoundaryCondition(theProblem, "underRW", DIRICHLET_X, 0, NAN);
-  femElasticityAddBoundaryCondition(theProblem, "upperRW", NEUMANN_Y, weight/3, NAN); 
-  femElasticityAddBoundaryCondition(theProblem, "underLW", NEUMANN_Y, lift/2, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "upperRW", NEUMANN_Y, weight, NAN); 
+  femElasticityAddBoundaryCondition(theProblem, "underLW", NEUMANN_Y, lift, NAN);
   femElasticityAddBoundaryCondition(theProblem, "underLW", DIRICHLET_X, 0, NAN);
-  femElasticityAddBoundaryCondition(theProblem, "upperLW", NEUMANN_Y, weight/3, NAN);
-  femElasticityAddBoundaryCondition(theProblem, "Wheels", DIRICHLET_NT, 0, 0);
-  femElasticityAddBoundaryCondition(theProblem, "Wheels", NEUMANN_Y, weight/3, NAN);
-  femElasticityAddBoundaryCondition(theProblem, "Cab", DIRICHLET_NT, 0, 0);
-  femElasticityAddBoundaryCondition(theProblem, "Fuselage0", DIRICHLET_NT, 0, 0);
-  femElasticityAddBoundaryCondition(theProblem, "Fuselage1", DIRICHLET_NT, 0, 0);
-  femElasticityAddBoundaryCondition(theProblem, "Fuselage2", DIRICHLET_NT, 0, 0);
-  femElasticityAddBoundaryCondition(theProblem, "Fuselage3", DIRICHLET_NT, 0, 0);
-  femElasticityAddBoundaryCondition(theProblem, "Fuselage4", DIRICHLET_NT, 0, 0);
-  femElasticityAddBoundaryCondition(theProblem, "Fuselage5", DIRICHLET_NT, 0, 0);
-  femElasticityAddBoundaryCondition(theProblem, "HStabL", DIRICHLET_NT, 0, 0);
-  femElasticityAddBoundaryCondition(theProblem, "HStabR", DIRICHLET_NT, 0, 0);
+  femElasticityAddBoundaryCondition(theProblem, "upperLW", NEUMANN_Y, weight, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "Wheels", DIRICHLET_Y, -0.14, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "HStabR", NEUMANN_Y, -lift/33.5, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "HStabL", NEUMANN_Y, -lift/33.5, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "VStabR", DIRICHLET_X, 0, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "VStabL", DIRICHLET_X, 0, NAN);
   femElasticityPrint(theProblem);
   femElasticityWrite(theProblem, "../../data/problem.txt");
 

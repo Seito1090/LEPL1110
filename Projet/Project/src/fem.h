@@ -26,11 +26,13 @@
 typedef enum { FEM_TRIANGLE, FEM_QUAD, FEM_EDGE } femElementType;
 typedef enum { DIRICHLET_X, DIRICHLET_Y, DIRICHLET_XY, DIRICHLET_N, DIRICHLET_T, DIRICHLET_NT, NEUMANN_X, NEUMANN_Y, NEUMANN_N, NEUMANN_T, UNDEFINED=-1} femBoundaryType;
 typedef enum { PLANAR_STRESS, PLANAR_STRAIN, AXISYM } femElasticCase;
+typedef enum {FEM_NO,FEM_XNUM,FEM_YNUM} femRenumType;
 
 typedef struct {
   int nNodes;
   double *X;
   double *Y;
+  int *number;
 } femNodes;
 
 typedef struct {
@@ -46,6 +48,13 @@ typedef struct {
   int *elem;
   char name[MAXNAME];
 } femDomain;
+
+typedef struct {
+    double *B;
+    double **A;        
+    int size;
+    int band;        
+} femBandSystem;
 
 typedef struct {
   double LxPlate, LyPlate;
@@ -138,6 +147,16 @@ void femElasticityAddBoundaryCondition(femProblem *theProblem, char *nameDomain,
 double *femElasticitySolve(femProblem *theProblem);
 void femElasticityWrite(femProblem *theProbconst, const char *filename);
 femProblem *femElasticityRead(femGeo *theGeometry, const char *filename);
+
+void axisymetriqueAssembly(femProblem *theProblem);
+double *femElasticitySolveAxisymetrique(femProblem *theProblem);
+void bandFemMeshRenumber(femMesh *theMesh, femRenumType renumType) ;
+int bandFemMeshComputeBand(femMesh *theMesh);
+void bandFemSystemAssemble(femBandSystem* myBandSystem, double *Aloc, double *Bloc, int *map, int nLoc);
+double  *bandFemSystemEliminate(femBandSystem *myBand);
+void bandFemElasticityAssembleElements(femProblem *theProblem);
+double *bandFemElasticitySolve(femProblem *theProblem);
+
 
 void femSolutionWrite(int nNodes, int nfields, double *data, const char *filename);
 int femSolutiondRead(int allocated_size, double *value, const char *filename);

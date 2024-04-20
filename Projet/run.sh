@@ -7,9 +7,9 @@ make
 ./myFem
 cd ..
 rm -rf build
-cd ../Project
+cd ../Project/
 cmake CMakeLists.txt -B build
-cd build 
+cd build/ 
 make 
 ./myFem
 cd ..
