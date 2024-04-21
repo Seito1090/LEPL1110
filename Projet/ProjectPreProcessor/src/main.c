@@ -21,7 +21,7 @@ int main(void) {
   femGeo *theGeometry = geoGetGeometry();
 
   //Lecture d'un fichier .msh
-  geoMeshGenerateMshFile("../../data/avion.msh");
+  geoMeshGenerateMshFile("../data/avion.msh");
 
 
   geoMeshImport();
@@ -43,7 +43,7 @@ int main(void) {
   geoSetDomainName(15, "Fuselage4");
   geoSetDomainName(16, "Fuselage5");
   geoSetDomainName(17, "Cab");
-  geoMeshWrite("../../data/mesh.txt");
+  geoMeshWrite("../Projet/src/data/mesh.txt");
 
   //
   //  -2- Definition du probleme
@@ -55,7 +55,7 @@ int main(void) {
   double gx = 0;
   double gy = 9.81;
   double lift = -3.5e6;
-  double mass = 108e3;
+  double mass = 398e3;
   double weight = mass * gy;
 
   femProblem *theProblem = femElasticityCreate(theGeometry, E, nu, rho, gx, gy, PLANAR_STRAIN);
@@ -67,6 +67,8 @@ int main(void) {
   femElasticityAddBoundaryCondition(theProblem, "upperLW", NEUMANN_Y, weight, NAN);
   femElasticityAddBoundaryCondition(theProblem, "HStabR", NEUMANN_Y, -lift/33.5, NAN);
   femElasticityAddBoundaryCondition(theProblem, "HStabL", NEUMANN_Y, -lift/33.5, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "Fuselage0", DIRICHLET_X, 0, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "Fuselage1", DIRICHLET_X, 0, NAN);
   femElasticityAddBoundaryCondition(theProblem, "Fuselage2", DIRICHLET_Y, 0, NAN);
   femElasticityAddBoundaryCondition(theProblem, "Fuselage3", DIRICHLET_Y, 0, NAN);
   femElasticityAddBoundaryCondition(theProblem, "Fuselage4", DIRICHLET_Y, 0, NAN);
@@ -77,7 +79,7 @@ int main(void) {
   femElasticityAddBoundaryCondition(theProblem, "LWL", DIRICHLET_X, 0, NAN);
 
   femElasticityPrint(theProblem);
-  femElasticityWrite(theProblem, "../../data/problem.txt");
+  femElasticityWrite(theProblem, "../Projet/src/data/problem.txt");
 
   femElasticityFree(theProblem);
   geoFree();

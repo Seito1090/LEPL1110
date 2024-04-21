@@ -2,9 +2,6 @@
 #include <time.h>
 
 
-/* Partie juste pour le solveur bande */
-# define MAX(a,b) (( a > b ) ?( a ) :( b ) )
-# define MIN(a,b) (( a < b ) ?( a ) :( b ) ) 
 double *theGlobalArrayPos;
 
 // Il faut un fifrelin generaliser ce code.....
@@ -279,6 +276,7 @@ typedef struct sparseMatrix {
   int *rptr;
   double *val;
 } sparseMatrix;
+
 void sparseMatrixFree(sparseMatrix *sp) {
   free(sp->col);
   free(sp->rptr);

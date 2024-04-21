@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "glfw",
+		"source" : "/home/seito/Documents/Classes/Bac3/LEPL1110/Projet/femlibs/glfw"
+	}
+}

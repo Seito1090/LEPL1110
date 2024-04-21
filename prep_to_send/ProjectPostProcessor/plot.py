@@ -71,9 +71,9 @@ class Mesh:
         return a
 
 
-mesh = Mesh("../data/mesh.txt")
+mesh = Mesh("../../Projet/src/data/mesh.txt")
 print(mesh)
-uv = np.loadtxt("../data/UV.txt", skiprows=1, delimiter=",")
+uv = np.loadtxt("../../Projet/src/data/UV.txt", skiprows=1, delimiter=",")
 uv_norm = np.linalg.norm(uv, axis=1)
 factor = 1e1
 cb = mesh.plotfield(uv_norm, uv*factor, cmap="turbo")
