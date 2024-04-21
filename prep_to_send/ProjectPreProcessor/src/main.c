@@ -21,7 +21,7 @@ int main(void) {
   femGeo *theGeometry = geoGetGeometry();
 
   //Lecture d'un fichier .msh
-  geoMeshGenerateMshFile("../../data/avion.msh");
+  geoMeshGenerateMshFile("../avion.msh");
 
 
   geoMeshImport();
@@ -43,7 +43,7 @@ int main(void) {
   geoSetDomainName(15, "Fuselage4");
   geoSetDomainName(16, "Fuselage5");
   geoSetDomainName(17, "Cab");
-  geoMeshWrite("../../data/mesh.txt");
+  geoMeshWrite("../../Projet/src/data/mesh.txt");
 
   //
   //  -2- Definition du probleme
@@ -77,7 +77,7 @@ int main(void) {
   femElasticityAddBoundaryCondition(theProblem, "LWL", DIRICHLET_X, 0, NAN);
 
   femElasticityPrint(theProblem);
-  femElasticityWrite(theProblem, "../../data/problem.txt");
+  femElasticityWrite(theProblem, "../../Projet/src/data/problem.txt");
 
   femElasticityFree(theProblem);
   geoFree();

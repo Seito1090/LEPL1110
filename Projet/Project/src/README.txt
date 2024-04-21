@@ -9,7 +9,7 @@ To make the project work on your machine follow these steps:
 
 OR open the root of this project in vscode, and click on the "Run" button on the bottom left corner of the screen.
 
-Warning: To be sure that the project finds your data files, make sure to run the executable from the root of the project, in this case it's just ./build/myFem.
+Warning: To be sure that the project finds your data files, make sure to run the executable from the directory the executable was created (vscode does this by default), in this case it's just ./myFem in /build/.
 
 
 ## Data
@@ -18,3 +18,4 @@ The code will read the data from the 'data' directory located in the src directo
 - 'problem.txt' : the data file
 
 In any case, the preProcessor should create these files for you.
+

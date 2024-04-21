@@ -6,17 +6,12 @@ Gravity-X          :  0.0000000e+00
 Gravity-Y          :  9.8100000e+00  
 Boundary condition :  Neumann-Y          = -3.5000000e+06,            nan : underRW
 Boundary condition :  Dirichlet-X        =  0.0000000e+00,            nan : underRW
-Boundary condition :  Neumann-Y          =  1.0594800e+06,            nan : upperRW
+Boundary condition :  Neumann-Y          =  3.9043800e+06,            nan : upperRW
 Boundary condition :  Neumann-Y          = -3.5000000e+06,            nan : underLW
 Boundary condition :  Dirichlet-X        =  0.0000000e+00,            nan : underLW
-Boundary condition :  Neumann-Y          =  1.0594800e+06,            nan : upperLW
+Boundary condition :  Neumann-Y          =  3.9043800e+06,            nan : upperLW
+Boundary condition :  Dirichlet-Y        =  0.0000000e+00,            nan : Wheels
 Boundary condition :  Neumann-Y          =  1.0447761e+05,            nan : HStabR
 Boundary condition :  Neumann-Y          =  1.0447761e+05,            nan : HStabL
-Boundary condition :  Dirichlet-Y        =  0.0000000e+00,            nan : Fuselage2
-Boundary condition :  Dirichlet-Y        =  0.0000000e+00,            nan : Fuselage3
-Boundary condition :  Dirichlet-Y        =  0.0000000e+00,            nan : Fuselage4
-Boundary condition :  Dirichlet-Y        =  0.0000000e+00,            nan : Fuselage5
 Boundary condition :  Dirichlet-X        =  0.0000000e+00,            nan : VStabR
 Boundary condition :  Dirichlet-X        =  0.0000000e+00,            nan : VStabL
-Boundary condition :  Dirichlet-X        =  0.0000000e+00,            nan : RWL
-Boundary condition :  Dirichlet-X        =  0.0000000e+00,            nan : LWL
