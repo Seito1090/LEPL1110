@@ -65,11 +65,12 @@ int main(void) {
   femElasticityAddBoundaryCondition(theProblem, "underLW", NEUMANN_Y, lift, NAN);
   femElasticityAddBoundaryCondition(theProblem, "underLW", DIRICHLET_X, 0, NAN);
   femElasticityAddBoundaryCondition(theProblem, "upperLW", NEUMANN_Y, weight, NAN);
-  femElasticityAddBoundaryCondition(theProblem, "Wheels", DIRICHLET_Y, -0.14, NAN);
+  femElasticityAddBoundaryCondition(theProblem, "Wheels", DIRICHLET_Y, -0.014, NAN);
   femElasticityAddBoundaryCondition(theProblem, "HStabR", NEUMANN_Y, -lift/33.5, NAN);
   femElasticityAddBoundaryCondition(theProblem, "HStabL", NEUMANN_Y, -lift/33.5, NAN);
   femElasticityAddBoundaryCondition(theProblem, "VStabR", DIRICHLET_X, 0, NAN);
   femElasticityAddBoundaryCondition(theProblem, "VStabL", DIRICHLET_X, 0, NAN);
+
   femElasticityPrint(theProblem);
   femElasticityWrite(theProblem, "../../data/problem.txt");
 

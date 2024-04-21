@@ -16,9 +16,8 @@ int main(void) {
   femGeo *theGeometry = geoGetGeometry();
   geoMeshRead("../../data/mesh.txt");
   femProblem *theProblem = femElasticityRead(theGeometry, "../../data/problem.txt");
-  printf("test : %d\n", theGeometry->theNodes->number[0]);
   femElasticityPrint(theProblem);
-  double *theSoluce = bandFemElasticitySolve(theProblem);
+  double *theSoluce = CGfemElasticitySolve(theProblem);
   int nNodes = theGeometry->theNodes->nNodes;
   femSolutionWrite(nNodes, 2, theSoluce, "../../data/UV.txt");
   femElasticityFree(theProblem);

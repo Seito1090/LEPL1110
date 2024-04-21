@@ -1,24 +1,20 @@
 #include "fem.h"
+#include <time.h>
+
 
 /* Partie juste pour le solveur bande */
 # define MAX(a,b) (( a > b ) ?( a ) :( b ) )
 # define MIN(a,b) (( a < b ) ?( a ) :( b ) ) 
 double *theGlobalArrayPos;
 
-// Modify compareNodePos to use theGlobalArrayPos
-int compareNodePos(const void *nodeOne, const void *nodeTwo) {
-    int *iOne = (int *)nodeOne;
-    int *iTwo = (int *)nodeTwo;
-    double diff = theGlobalArrayPos[*iOne] - theGlobalArrayPos[*iTwo];
-    return (diff < 0) ? -1 : (diff > 0) ? 1 : 0; // Return -1 / 0 / 1
-}
-
-/* Solveur par défaut */
 // Il faut un fifrelin generaliser ce code.....
 //  (1) Ajouter l'axisymétrique !    (mandatory) //DONE -> assiette 
 //  (2) Ajouter les conditions de Neumann !   (mandatory) //DONE Neumann -> force Dirichlet -> déplacement
 //  (3) Ajouter les conditions en normal et tangentiel !   (strongly advised) //DONE
-//  (4) Et remplacer le solveur plein par un truc un fifrelin plus subtil  (mandatory)
+//  (4) Et remplacer le solveur plein par un truc un fifrelin plus subtil  (mandatory) //DONE -> bande
+
+/* Fonctions donées de base dans le tempate du projet */
+
 
 void femElasticityAssembleElements(femProblem *theProblem) {
   femFullSystem *theSystem = theProblem->system;
@@ -235,6 +231,9 @@ double *femElasticitySolve(femProblem *theProblem) {
   return theProblem->soluce;
 }
 
+/* Solveur axisymetrique, pas utilisé dans notre cas étant donné la nature de notre problème */
+
+
 void axisymetriqueAssembly(femProblem *theProblem){
   //L'idée ici, on calcule juste une section du problème et ensuite on le fait tourner :), le problème donné est toujours un problème 2D ! (P.S. : notre problème avec l'avion n'est pas du tout adapté pour 
   //l'axisymétrique, c'est pour ça que cette fonction n'est pas utilisée autrepart)
@@ -322,11 +321,22 @@ double *femElasticitySolveAxisymetrique(femProblem *theProblem) {
   return theProblem->soluce;
 }
 
-/* Solveur bande et ses autres fonctions */
+/* Solveur bande et ses autres fonctions, ceci est basé sur un des devoirs faits durant ce quadri */
+
+
+// Modify compareNodePos to use theGlobalArrayPos, nécesssaire pour pouvoir renuméroter les noeuds
+int compareNodePos(const void *nodeOne, const void *nodeTwo) {
+    int *iOne = (int *)nodeOne;
+    int *iTwo = (int *)nodeTwo;
+    double diff = theGlobalArrayPos[*iOne] - theGlobalArrayPos[*iTwo];
+    return (diff < 0) ? -1 : (diff > 0) ? 1 : 0; // Return -1 / 0 / 1
+}
+
 //Fonction pour renuméroter les noeuds
 void bandFemMeshRenumber(femMesh *theMesh, femRenumType renumType) {
+    /* Idée ici c'est de simplement renuméroter les noeuds dans le sens inverse */
     int i;
-    int *inverse = (int *)malloc(sizeof(int) * theMesh->nodes->nNodes); // Allocate memory for inverse array
+    int *inverse = (int *)malloc(sizeof(int) * theMesh->nodes->nNodes);
     for (i = 0; i < theMesh->nodes->nNodes; i++)
         inverse[i] = i;
 
@@ -350,12 +360,9 @@ void bandFemMeshRenumber(femMesh *theMesh, femRenumType renumType) {
     
     free(inverse);
 }
-//Fonction pour calculer la bande
-int bandFemMeshComputeBand(femMesh *theMesh){
-    int myBand = theMesh->nodes->nNodes;
-    return(myBand);
-}
-//Fonction pour assembler les éléments
+
+
+//Fonctions pour assembler les éléments
 void bandFemSystemAssemble(femFullSystem* myBandSystem, double *Aloc, double *Bloc, int *map, int nLoc){
     for ( int i = 0; i < nLoc ; i ++) {
         int myRow = map [ i ];
@@ -370,43 +377,6 @@ void bandFemSystemAssemble(femFullSystem* myBandSystem, double *Aloc, double *Bl
         myBandSystem -> B [ myRow ] += Bloc [ i ];
     }
 }
-//Fonction pour résoudre le système par élimination
-double  *bandFemSystemEliminate(femBandSystem *myBand){
-    double  **A, *B, factor;
-    int     i, j, k, jend, size, band;
-    A    = myBand->A;
-    B    = myBand->B;
-    size = myBand->size;
-    band = myBand->band;
-    
-    /* Gaussian elimination */
-    for (k =0; k < size ; k ++) {
-        if (fabs(A[k][k]) <= 1e-4) { Error("Cannot eliminate with such a pivot"); }
-        // Limite de la ligne rouge
-        jend = MIN ( k + band , size ) ;
-        for (i = k+1 ; i < jend ; i ++) {
-            // On recupere l"element symetrique
-            factor = A [k][i] / A [k][k];
-            for (j = i ; j < jend ; j ++){
-                A [i][j] = A [i][j] - A [k][j] * factor ;
-            }
-            B[i] = B [i] - B [k] * factor ;
-        }
-    }
-    /* Back - substitution */
-    for (i = (size -1) ; i >= 0 ; i--){
-        factor = 0;
-
-        // Limite de la ligne rouge
-        jend = MIN (i + band , size) ;
-        for ( j = i +1 ; j < jend ; j ++){
-            factor += A [i][j] * B [j];
-        }
-        B[i] = ( B [i] - factor) / A [i][i];
-    }
-    return (myBand -> B) ;
-}
-
 void bandFemElasticityAssembleElements(femProblem *theProblem) {
   femFullSystem *theSystem = theProblem->system;
   femIntegration *theRule = theProblem->rule;
@@ -474,17 +444,200 @@ void bandFemElasticityAssembleElements(femProblem *theProblem) {
         B[mapY[i]] += phi[i] * gy * rho * jac * weight;
       }
     }
-    bandFemSystemAssemble(theSystem, A[0], B, map, nLocal);
+    bandFemSystemAssemble(theSystem, A[iElem], B, map, nLocal);
   }
 }
 
+
+//Fonction pour résoudre le système par élimination
+double  *bandFemSystemEliminate(femBandSystem *myBand){
+    double  **A, *B, factor;
+    int     i, j, k, jend, size, band;
+    A    = myBand->A;
+    B    = myBand->B;
+    size = myBand->size;
+    band = myBand->band;
+    
+    /* Gaussian elimination */
+    for (k =0; k < size ; k ++) {
+        if (fabs(A[k][k]) <= 1e-4) { Error("Cannot eliminate with such a pivot"); }
+
+        // Limite de la ligne rouge
+        jend = MIN ( k + band , size ) ;
+        for (i = k+1 ; i < jend ; i ++) {
+
+            // On recupere l"element symetrique
+            factor = A [k][i] / A [k][k];
+            for (j = i ; j < jend ; j ++){
+                A [i][j] = A [i][j] - A [k][j] * factor ;
+            }
+            B[i] = B [i] - B [k] * factor ;
+        }
+    }
+    /* Back - substitution */
+    for (i = (size -1) ; i >= 0 ; i--){
+        factor = 0;
+
+        // Limite de la ligne rouge
+        jend = MIN (i + band , size) ;
+        for ( j = i +1 ; j < jend ; j ++){
+            factor += A [i][j] * B [j];
+        }
+        B[i] = (B [i] - factor) / A [i][i];
+    }
+    return (myBand -> B) ;
+}
+
+//Fonction solve appelée par le main
 double *bandFemElasticitySolve(femProblem *theProblem) {
   bandFemMeshRenumber(theProblem->geometry->theElements, FEM_XNUM);
   bandFemElasticityAssembleElements(theProblem); 
   femElasticityAssembleNeumann(theProblem);
-  //femElasticityApplyDirichlet(theProblem);
+  femElasticityApplyDirichlet(theProblem);
 
   double *soluce = bandFemSystemEliminate((femBandSystem *)theProblem->system); 
   memcpy(theProblem->soluce, soluce, theProblem->system->size * sizeof(double));
   return theProblem->soluce;
 }
+
+/* CG + CSR */
+# define TOL 10e-6
+# define MAX_ITER 1000
+typedef struct sparseMatrix {
+  int size;
+  int nnz;
+  int *col;
+  int *rptr;
+  double *val;
+} sparseMatrix;
+void sparseMatrixFree(sparseMatrix *sp) {
+  free(sp->col);
+  free(sp->rptr);
+  free(sp->val);
+  free(sp);
+}
+
+sparseMatrix* to_sparse(double **A, int size) {
+  int nnz = 0;
+  for (int i = 0; i < size; i++) {
+    for(int j = 0; j < size; j++) {
+      nnz += (A[i][j] != 0);
+    }
+  }
+  int* col = malloc(nnz * sizeof(int));
+  int* rptr = malloc((size + 1) * sizeof(int));
+  double* val = malloc(nnz * sizeof(double));
+  
+  nnz = 0;
+  for(int i = 0; i < size; i++) {
+    rptr[i] = nnz;
+    for(int j = 0; j < size; j++) {
+      if(A[i][j] != 0) {
+        col[nnz] = j;
+        val[nnz] = A[i][j];
+        nnz++;
+      }
+    }
+  }
+  rptr[size] = nnz;
+
+  sparseMatrix* sp = malloc(sizeof(sparseMatrix));
+  sp->size = size;
+  sp->nnz = nnz;
+  sp->col = col;
+  sp->rptr = rptr;
+  sp->val = val;
+  return sp;
+}
+
+static inline void spmv(const sparseMatrix* sp, const double* x, double* y) {
+  for(int i = 0; i < sp->size; i++) {
+    double s = 0;
+    for(int j = sp->rptr[i]; j < sp->rptr[i+1]; j++) {
+      s += sp->val[j] * x[sp->col[j]];
+    }
+    y[i] = s;
+  }
+}
+
+static inline void residual(const sparseMatrix* sp, const double* x, const double* b, double* r) {
+  spmv(sp, x, r);
+  for(int i = 0; i < sp->size; i++) {
+    r[i] = b[i] - r[i];
+  }
+}
+
+static inline double dot(const double* x, const double* y, int size) {
+  double s = 0;
+  for(int i = 0; i < size; i++) {
+    s += x[i] * y[i];
+  }
+  return s;
+}
+
+static inline void axpy(double* x, const double* y, double a, int size) {
+  for(int i = 0; i < size; i++) {
+    x[i] += a * y[i];
+  }
+}
+
+double *solve_cg(femFullSystem *mySystem) {
+  int size = mySystem->size;
+  double **A = mySystem->A;
+  double *B = mySystem->B;
+  //clock_t start, stop;
+
+  //start = clock();
+  sparseMatrix* sp = to_sparse(A, size);
+  //stop = clock();
+  //printf("Time to create sparse mat: %f ms\n", 1000 * (double)(stop - start) / CLOCKS_PER_SEC);
+
+  int niter = 0;
+  double *x = malloc(size * sizeof(double));
+  double *r = malloc(size * sizeof(double));
+  double *p = malloc(size * sizeof(double));
+  double *Ap = malloc(size * sizeof(double));
+
+  // Initialize x, r, and p
+  for (int i = 0; i < size; i++) {
+    x[i] = 0.0;
+    r[i] = B[i];
+    p[i] = r[i];
+  }
+
+  double alpha, beta, rr, rrNew;
+  rr = dot(r, r, size);
+
+  while (niter < size) {
+    spmv(sp, p, Ap);
+    alpha = rr / dot(p, Ap, size);
+    axpy(x, p, alpha, size);
+    axpy(r, Ap, -alpha, size);
+    rrNew = dot(r, r, size);
+    beta = rrNew / rr;
+    for (int i = 0; i < size; i++) {
+      p[i] = r[i] + beta * p[i];
+    }
+    rr = rrNew;
+    niter++;
+  }
+
+  free(r);
+  free(p);
+  free(Ap);
+
+  return x;
+}
+
+double *CGfemElasticitySolve(femProblem *theProblem) {
+  femElasticityAssembleElements(theProblem);
+  femElasticityAssembleNeumann(theProblem);
+  femElasticityApplyDirichlet(theProblem);
+
+  double *soluce = solve_cg(theProblem->system);
+  memcpy(theProblem->soluce, soluce, theProblem->system->size * sizeof(double));
+  return theProblem->soluce;
+}
+
+
+

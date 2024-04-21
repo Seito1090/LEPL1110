@@ -156,6 +156,7 @@ void bandFemSystemAssemble(femFullSystem* myBandSystem, double *Aloc, double *Bl
 double  *bandFemSystemEliminate(femBandSystem *myBand);
 void bandFemElasticityAssembleElements(femProblem *theProblem);
 double *bandFemElasticitySolve(femProblem *theProblem);
+double *CGfemElasticitySolve(femProblem *theProblem);
 
 
 void femSolutionWrite(int nNodes, int nfields, double *data, const char *filename);

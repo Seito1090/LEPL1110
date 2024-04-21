@@ -81,7 +81,7 @@ plt.colorbar(cb)
 mesh.plot(uv*factor, lw=0.8, c="k")
 plt.gca().set_aspect("equal")
 plt.grid(alpha=0.2)
-plt.savefig(f"images_gif/plot_29.png")
+plt.savefig(f"images_gif/0.png")
 plt.show()
 
 
